@@ -4,8 +4,9 @@ The repository verification command is `npm ci && npm test && npm run build`. Fo
 
 ## Automated checks
 1. `npm ci` installs the baseline dependencies, leaving `node_modules/` clean before you run any commands.
-2. `npm test` currently runs `scripts/verify-docs.mjs`, which ensures that `AGENTS.md` lists every document inside `docs/standards/`, that each file exists, and that the README mentions the standards directory. Always rerun this check when any doc, filename, or link changes.
+2. `npm test` runs `scripts/verify-docs.mjs` followed by `vitest run`, so documentation links and interactive behaviors (like the confetti milestone) stay verified together. Always rerun this combined check whenever any doc, filename, link, or interactive component changes.
 3. `npm run build` exercises TypeScript and Vite. Since this template ships with TypeScript checks (`tsc -b`) and Vite's production bundle, the build ensures your code respects the existing toolchain.
+4. `npm run test:unit` reruns the Vitest suite without the docs check when you just need to retest interactive behaviors locally (confetti milestones, counters, form flows, etc.).
 
 ## When to add new checks
 - If a story introduces runtime behavior beyond documentation (e.g., new interactive widgets), add the matching unit/integration test in the same commit so future agents can see the verification pattern. Document new tests in `docs/standards/verification-workflow.md` and update `AGENTS.md`.
