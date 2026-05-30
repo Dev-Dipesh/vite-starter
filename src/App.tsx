@@ -1,14 +1,50 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
+import ConfettiBurst from './ConfettiBurst'
 import './App.css'
+
+const CONFETTI_DURATION_MS = 2600
 
 function App() {
   const [count, setCount] = useState(0)
+  const [confettiSeed, setConfettiSeed] = useState(0)
+  const [showConfetti, setShowConfetti] = useState(false)
+  const confettiTimerRef = useRef<number | null>(null)
+
+  useEffect(() => {
+    const isMilestone = count > 0 && count % 10 === 0
+
+    if (!isMilestone) {
+      return
+    }
+
+    if (confettiTimerRef.current) {
+      clearTimeout(confettiTimerRef.current)
+    }
+
+    setShowConfetti(true)
+    setConfettiSeed((seed) => seed + 1)
+
+    confettiTimerRef.current = window.setTimeout(() => {
+      setShowConfetti(false)
+      confettiTimerRef.current = null
+    }, CONFETTI_DURATION_MS)
+  }, [count])
+
+  useEffect(() => {
+    return () => {
+      if (confettiTimerRef.current) {
+        clearTimeout(confettiTimerRef.current)
+      }
+    }
+  }, [])
 
   return (
     <>
+      {showConfetti && <ConfettiBurst seed={confettiSeed} />}
+
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />

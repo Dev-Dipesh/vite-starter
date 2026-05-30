@@ -18,6 +18,8 @@ This file is the entry point for AI agents working in the Vite Starter workspace
 - [2026-06-02] Agentic SDLC PoC story: Documented that `npm test` now runs `test:unit`/Vitest before the doc verification step so interactive counter changes ship with repeatable unit-test evidence, and linked the updated verification workflow guidance for future agents.
 - [2026-06-01] Agentic SDLC PoC story: Introduced the structured docs tree, validation script, and README guidance so every agent can find the directory, coding, and verification standards in one place.
 - [2026-05-30] Agentic SDLC PoC story: Reiterated that agents must update the relevant markdown, log the rationale entry, and rerun `scripts/verify-docs.mjs` when any standard changes so future agents can adopt the control without guessing.
+- [2026-05-30] Agentic SDLC PoC story: Added a Vitest-backed `npm run test:unit` check for the new confetti milestone and recorded the script in `docs/standards/verification-workflow.md` so the interactive behavior remains covered by automated verification.
+- [2026-06-02] Agentic SDLC PoC story: Updated `npm test` so `scripts/verify-docs.mjs` and `vitest run` execute together, keeping the mandated `npm ci && npm test && npm run build` workflow aligned with the documented verification steps and reinforcing the confetti milestone coverage.
 
 
 When you bump any of the standards above:
