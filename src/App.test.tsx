@@ -36,3 +36,30 @@ test('renders confetti on multiples of ten and keeps it hidden otherwise', async
   await user.click(button)
   expect(await screen.findByTestId('confetti-shell')).toBeInTheDocument()
 })
+
+
+test('reset button returns the count to zero and hides active confetti immediately', async () => {
+  const user = userEvent.setup()
+  render(<App />)
+
+  const counterButton = screen.getByRole('button', { name: /count is/i })
+  const resetButton = screen.getByRole('button', { name: /reset count/i })
+
+  for (let i = 0; i < 10; i += 1) {
+    await user.click(counterButton)
+  }
+
+  expect(await screen.findByTestId('confetti-shell')).toBeInTheDocument()
+
+  await user.click(resetButton)
+
+  expect(counterButton).toHaveTextContent('Count is 0')
+
+  await waitFor(
+    () => {
+      expect(screen.queryByTestId('confetti-shell')).not.toBeInTheDocument()
+    },
+    { timeout: 500 }
+  )
+})
+

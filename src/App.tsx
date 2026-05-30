@@ -41,6 +41,16 @@ function App() {
     }
   }, [])
 
+  const resetCount = () => {
+    setCount(0)
+    setShowConfetti(false)
+
+    if (confettiTimerRef.current) {
+      clearTimeout(confettiTimerRef.current)
+      confettiTimerRef.current = null
+    }
+  }
+
   return (
     <>
       {showConfetti && <ConfettiBurst seed={confettiSeed} />}
@@ -57,13 +67,18 @@ function App() {
             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
           </p>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
+        <div className="counter-actions">
+          <button
+            type="button"
+            className="counter"
+            onClick={() => setCount((count) => count + 1)}
+          >
+            Count is {count}
+          </button>
+          <button type="button" className="reset" onClick={resetCount}>
+            Reset count
+          </button>
+        </div>
       </section>
 
       <div className="ticks"></div>
