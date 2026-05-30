@@ -38,6 +38,13 @@ test('renders confetti on multiples of ten and keeps it hidden otherwise', async
 })
 
 
+test('displays the hero heading text', () => {
+  render(<App />)
+  const heading = screen.getByRole('heading', { level: 1 })
+  expect(heading).toHaveTextContent('Confetti Counter')
+})
+
+
 test('reset button returns the count to zero and hides active confetti immediately', async () => {
   const user = userEvent.setup()
   render(<App />)
