@@ -17,6 +17,22 @@
   }
 }
 
+.counter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.counter.reset {
+  color: var(--text-h);
+  background: transparent;
+  border-color: var(--border);
+}
+
+.counter.reset:hover {
+  border-color: var(--accent-border);
 .confetti-shell {
   pointer-events: none;
   position: fixed;
