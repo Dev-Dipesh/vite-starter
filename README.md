@@ -2,6 +2,19 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+
+## Agent Guidance
+
+AI agents working on this repository should begin by reading [AGENTS.md](AGENTS.md). That file indexes the documents inside `docs/standards/`, which cover:
+
+- **Directory Expectations:** where files belong and how to expand the tree safely.
+- **Coding Patterns and Quality Controls:** component habits, styling guidance, and TypeScript expectations for new work.
+- **Verification Workflow:** the prescribed checks (`npm ci && npm test && npm run build`) and the lightweight `scripts/verify-docs.mjs` validator.
+- **Standards Update Workflow:** how to document a change and log the reasoning for future agents.
+
+After editing docs or standards, update the relevant markdown, add a short rationale entry to `AGENTS.md` explaining the user story or reason for the change, and rerun `npm test` so `scripts/verify-docs.mjs` confirms every document is still linked.
+Whenever a story changes one of these standards, describe the valid reasoning in both the touched document and the AGENTS log so future agents can adopt the new expectations.
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
