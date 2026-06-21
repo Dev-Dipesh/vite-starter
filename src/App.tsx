@@ -1,3 +1,4 @@
+import type { ChangeEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
@@ -12,11 +13,18 @@ function App() {
   const [confettiSeed, setConfettiSeed] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
   const confettiTimerRef = useRef<number | null>(null)
+  const [multiplierInput, setMultiplierInput] = useState('1')
+  const multiplier = Math.max(1, Math.floor(Number(multiplierInput)) || 1)
+  const prevCountRef = useRef(0)
 
   useEffect(() => {
-    const isMilestone = count > 0 && count % 10 === 0
+    const prevCount = prevCountRef.current
+    const hasCrossedMilestone =
+      count > prevCount && Math.floor(prevCount / 10) < Math.floor(count / 10)
 
-    if (!isMilestone) {
+    prevCountRef.current = count
+
+    if (!hasCrossedMilestone) {
       return
     }
 
@@ -51,6 +59,10 @@ function App() {
     }
   }
 
+  const handleMultiplierChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setMultiplierInput(event.target.value)
+  }
+
   return (
     <>
       {showConfetti && <ConfettiBurst seed={confettiSeed} />}
@@ -71,13 +83,27 @@ function App() {
           <button
             type="button"
             className="counter"
-            onClick={() => setCount((count) => count + 1)}
+            onClick={() => setCount((current) => current + multiplier)}
           >
             Count is {count}
           </button>
           <button type="button" className="reset" onClick={resetCount}>
             Reset count
           </button>
+          <div className="multiplier-control">
+            <label htmlFor="multiplier-input">
+              Multiplier
+              <span>per click</span>
+            </label>
+            <input
+              id="multiplier-input"
+              type="number"
+              min={1}
+              step={1}
+              value={multiplierInput}
+              onChange={handleMultiplierChange}
+            />
+          </div>
         </div>
       </section>
 
